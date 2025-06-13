@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sarcasm Detector</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: #fff;
+            padding-top: 40px;
+        }
+
+        .container {
+            background: #1f1f1f;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        textarea {
+            background-color: #2c2c2c;
+            color: #fff;
+        }
+
+        select,
+        .btn {
+            margin-top: 10px;
+        }
+
+        .info-box,
+        .result-box {
+            background-color: #292929;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInMove 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInMove {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container text-center">
+        <h2>🧠 Sarcasm Detection App</h2>
+        <form method="POST" id="sarcasmForm">
+            <div class="form-group">
+                <textarea class="form-control mt-3" name="text" id="inputText" rows="4"
+                    placeholder="Enter a sentence..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="model" class="mt-3">Choose a Model</label>
+                <select class="form-select" name="model" id="model">
+                    <option value="LGBM" {% if selected_model=='LGBM' %}selected{% endif %}>LightGBM (Top Performer)
+                    </option>
+                    <option value="CatBoost" {% if selected_model=='CatBoost' %}selected{% endif %}>CatBoost</option>
+                    <option value="XGBoost" {% if selected_model=='XGBoost' %}selected{% endif %}>XGBoost</option>
+                    <option value="Random Forest" {% if selected_model=='Random Forest' %}selected{% endif %}>Random
+                        Forest</option>
+                </select>
+            </div>
+            <div class="btn-group">
+                <button type="submit" class="btn btn-outline-info w-50">Predict</button>
+                <button type="button" class="btn btn-outline-warning w-50" onclick="clearForm()">Clear</button>
+            </div>
+        </form>
+
+        {% if model_info %}
+        <div class="info-box text-start mt-4 fade-in" id="modelInfoBox">
+            <strong>🧾 Model Description:</strong><br>
+            {{ model_info }}
+        </div>
+        {% endif %}
+
+        {% if prediction %}
+        <div class="result-box mt-3 fade-in" id="resultBox">
+            <strong>🔍 Prediction:</strong> {{ prediction }}
+        </div>
+        {% endif %}
+
+    </div>
+
+    <script>
+        function clearForm() {
+            document.getElementById("sarcasmForm").reset();
+            const resultBox = document.getElementById("resultBox");
+            const modelInfoBox = document.getElementById("modelInfoBox");
+            if (resultBox) resultBox.style.display = "none";
+            if (modelInfoBox) modelInfoBox.style.display = "none";
+        }
+    </script>
+</body>
+
+</html>
