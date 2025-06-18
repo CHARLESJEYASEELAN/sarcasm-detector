@@ -27,5 +27,9 @@ The following table summarizes the performance of the top 4 models based on accu
 | XGBoost       | 0.788413  | 0.788775  | 0.788413 | 0.788273 |
 | Random Forest | 0.770781  | 0.774146  | 0.770781 | 0.770291 |
 
+Other models that i experimented!!
+
+![Performance Bar](plots.png)
+
 The performance comparison is visualized in a bar chart (see `01_Data.ipynb` for details).
 
